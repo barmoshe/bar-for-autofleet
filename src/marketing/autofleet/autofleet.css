@@ -1,0 +1,667 @@
+/* =============================================================
+   autofleet.css — Autofleet's visual language on the `.af-root`
+   scope, read live off autofleet.io (2026-07-05, getComputedStyle):
+
+     ink        #333333   headings (Visby CF 700 → Poppins here)
+     body       #707070   ~19px
+     surface    #F5F5F7   near-white gray
+     primary    #11A4FF   CTAs, radius 8, inset white sheen
+     gradient   #55C3FF → #1EF5B9  (45deg/90deg, footer + accents)
+
+   Everything overrides the .mp-root base from marketing-base.css.
+   ============================================================= */
+
+.af-root {
+  --af-ink: #333333;
+  --af-body: #707070;
+  --af-bg: #f5f5f7;
+  --af-surface: #ffffff;
+  --af-blue: #11a4ff;
+  --af-sky: #55c3ff;
+  --af-mint: #1ef5b9;
+  --af-mint-deep: #1ec9a0;
+  --af-line: #e3e9ef;
+  --af-grad: linear-gradient(45deg, var(--af-sky), var(--af-sky) 20%, var(--af-mint));
+  --af-grad-90: linear-gradient(90deg, var(--af-sky) 20%, var(--af-mint));
+  --af-radius: 8px;
+  --af-radius-lg: 16px;
+  --af-radius-xl: 24px;
+  --af-sheen: inset 0 3px 8px rgba(255, 255, 255, 0.25);
+  --af-shadow: 0 10px 30px rgba(51, 72, 90, 0.08);
+  --af-font: var(--font-af-sans), 'Poppins', Arial, sans-serif;
+
+  background: var(--af-bg);
+  color: var(--af-body);
+  font-family: var(--af-font);
+  font-size: 18px;
+  line-height: 1.55;
+}
+
+.af-root :where(h1, h2, h3, h4) {
+  font-family: var(--af-font);
+  color: var(--af-ink);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.af-root a { text-decoration: none; }
+
+.af-root :where(button, a, summary, [role='button']):focus-visible {
+  outline: 3px solid var(--af-blue);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.af-skip {
+  position: absolute;
+  inset-block-start: -48px;
+  inset-inline-start: 12px;
+  background: var(--af-ink);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: var(--af-radius);
+  font-weight: 600;
+  z-index: 100;
+}
+.af-skip:focus-visible { inset-block-start: 12px; }
+
+/* ---------------------------------------------------------------
+   Announcement bar — their blue trends strip
+   --------------------------------------------------------------- */
+
+.af-announce {
+  background: #3fa9f5;
+  background: linear-gradient(90deg, #2ea0f7, #4db4ff);
+  color: #fff;
+  text-align: center;
+  padding: 9px 16px;
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+.af-announce p { margin: 0; }
+.af-announce a {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---------------------------------------------------------------
+   Nav — their white sticky bar
+   --------------------------------------------------------------- */
+
+.af-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fff;
+  box-shadow: 0 1px 0 var(--af-line), 0 8px 24px rgba(51, 72, 90, 0.06);
+}
+.af-nav__inner {
+  max-width: 1180px;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 14px 24px;
+}
+.af-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.3rem;
+  line-height: 1;
+}
+.af-loop { width: 40px; height: 26px; display: inline-block; }
+.af-brand__name { color: var(--af-ink); font-weight: 700; }
+.af-brand__for { color: var(--af-body); font-weight: 400; }
+.af-nav__links {
+  display: flex;
+  gap: 26px;
+  margin-inline-start: auto;
+}
+.af-nav__link {
+  color: var(--af-ink);
+  font-weight: 500;
+  font-size: 0.98rem;
+}
+.af-nav__link:hover { color: var(--af-blue); }
+
+@media (max-width: 640px) {
+  .af-nav__links { display: none; }
+  .af-nav__inner { justify-content: space-between; }
+}
+
+/* ---------------------------------------------------------------
+   Buttons — #11A4FF, radius 8, the inset white sheen
+   --------------------------------------------------------------- */
+
+.af-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: var(--af-radius);
+  padding: 15px 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.1;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+.af-btn--primary {
+  background: var(--af-blue);
+  color: #fff;
+  box-shadow: var(--af-sheen);
+}
+.af-btn--primary:hover {
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow: var(--af-sheen), 0 10px 22px rgba(17, 164, 255, 0.35);
+}
+.af-btn--ghost {
+  background: #fff;
+  color: var(--af-ink);
+  border: 1px solid var(--af-blue);
+}
+.af-btn--ghost:hover { transform: translateY(-2px); box-shadow: var(--af-shadow); }
+.af-btn--sm { padding: 11px 18px; font-size: 0.92rem; }
+.af-btn__play { display: inline-flex; }
+.af-btn__play svg { width: 22px; height: 22px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .af-btn { transition: none; }
+  .af-btn:hover { transform: none; }
+}
+
+/* ---------------------------------------------------------------
+   Hero — left headline over the isometric city
+   --------------------------------------------------------------- */
+
+.af-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #fbfcfd, var(--af-bg));
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+}
+.af-hero__city {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: -40px;
+  width: min(62%, 940px);
+  height: 100%;
+  pointer-events: none;
+}
+.af-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  width: 100%;
+  margin-inline: auto;
+  padding: 84px 24px 96px;
+}
+.af-h1 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.04;
+  margin: 0 0 20px;
+  max-width: 13ch;
+}
+.af-lede {
+  max-width: 44ch;
+  margin: 0 0 30px;
+  font-size: 1.06rem;
+}
+.af-hero__cta { display: flex; flex-wrap: wrap; gap: 14px; }
+
+@media (max-width: 900px) {
+  .af-hero__city { opacity: 0.45; }
+}
+
+/* the optimized-route ribbon + vehicles + pins */
+.af-route { opacity: 0.95; }
+
+/* The cars sit inside groups that carry SVG transform attributes, so the
+   drive animation lives on the inner .af-car group (its own transform is
+   free). Same story for the pin bob: it animates the pin's inner shapes,
+   because the outer group's transform attribute must not be overridden. */
+.af-pin--bob path,
+.af-pin--bob circle { transform-box: fill-box; transform-origin: center; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .af-car--a { animation: af-drive-a 14s linear infinite; }
+  .af-car--b { animation: af-drive-b 17s linear infinite; }
+  .af-pin--bob path,
+  .af-pin--bob circle { animation: af-bob 4.5s ease-in-out infinite; }
+  @keyframes af-drive-a {
+    0% { transform: translate(0, 0); opacity: 0; }
+    6% { opacity: 1; }
+    94% { opacity: 1; }
+    100% { transform: translate(340px, 0); opacity: 0; }
+  }
+  @keyframes af-drive-b {
+    0% { transform: translate(0, 0); opacity: 0; }
+    6% { opacity: 1; }
+    94% { opacity: 1; }
+    100% { transform: translate(-380px, 0); opacity: 0; }
+  }
+  @keyframes af-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+}
+
+/* ---------------------------------------------------------------
+   Stack strip — their gray customer-logo row
+   --------------------------------------------------------------- */
+
+.af-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 18px 36px;
+  padding: 26px 24px;
+  background: #fff;
+  border-block: 1px solid var(--af-line);
+}
+.af-strip__item {
+  color: #9aa7b2;
+  font-weight: 600;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+}
+
+/* ---------------------------------------------------------------
+   Sections
+   --------------------------------------------------------------- */
+
+.af-section { padding: 88px 0; }
+.af-section--tint {
+  background:
+    radial-gradient(90% 18% at 50% 0%, rgba(17, 164, 255, 0.07) 0%, rgba(17, 164, 255, 0) 100%),
+    #fbfcfd;
+  border-block-start: 1px solid var(--af-line);
+}
+.af-wrap { max-width: 1180px; margin-inline: auto; padding-inline: 24px; }
+
+.af-h2 {
+  font-size: clamp(1.7rem, 3.6vw, 2.35rem);
+  line-height: 1.12;
+  margin: 0 0 14px;
+}
+.af-h2--center { text-align: center; }
+.af-sub { margin: 0; font-size: 1.03rem; }
+.af-sub--center {
+  text-align: center;
+  max-width: 62ch;
+  margin-inline: auto;
+}
+
+/* ── Fit rows: their alternating two-column grammar ── */
+
+.af-row {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 56px;
+  align-items: center;
+  margin-block-start: 72px;
+}
+.af-row--flip .af-row__text { order: 2; }
+.af-row--flip .af-row__art { order: 1; }
+
+.af-kicker {
+  color: var(--af-blue);
+  font-weight: 600;
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+.af-h3 {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  line-height: 1.18;
+  margin: 0 0 12px;
+}
+/* their left vertical accent bar on headings */
+.af-h3--bar {
+  position: relative;
+  padding-inline-start: 18px;
+}
+.af-h3--bar::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 4px;
+  width: 4px;
+  border-radius: 2px;
+  background: var(--af-grad-90);
+}
+.af-row__sub { margin: 0 0 18px; }
+
+/* their square teal bullet markers */
+.af-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.af-bullets li {
+  position: relative;
+  padding-inline-start: 24px;
+  color: var(--af-ink);
+  font-weight: 500;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+.af-bullets li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-start: 0.52em;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--af-grad-90);
+}
+
+.af-row__art { display: flex; justify-content: center; }
+.af-art { width: 100%; max-width: 440px; height: auto; }
+
+@media (max-width: 860px) {
+  .af-row { grid-template-columns: 1fr; gap: 28px; margin-block-start: 56px; }
+  .af-row--flip .af-row__text { order: 1; }
+  .af-row--flip .af-row__art { order: 2; }
+}
+
+/* ── The 1-2-3 numbered strip ── */
+
+.af-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+  margin-block-start: 84px;
+}
+.af-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.af-step__n {
+  font-size: 3.4rem;
+  font-weight: 700;
+  line-height: 0.9;
+  background: var(--af-grad-90);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.af-step__chip {
+  background: #fff;
+  border: 1px solid var(--af-line);
+  border-radius: var(--af-radius-lg);
+  box-shadow: var(--af-shadow);
+  padding: 16px 18px;
+}
+.af-step__h { font-size: 1.06rem; margin: 0 0 6px; }
+.af-step__p { margin: 0; font-size: 0.92rem; }
+
+@media (max-width: 860px) {
+  .af-steps { grid-template-columns: 1fr; gap: 18px; margin-block-start: 60px; }
+}
+
+/* ---------------------------------------------------------------
+   Work grid — their resource cards
+   --------------------------------------------------------------- */
+
+.af-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-block-start: 46px;
+}
+.af-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--af-surface);
+  border: 1px solid var(--af-line);
+  border-radius: var(--af-radius-lg);
+  padding: 18px 18px 16px;
+  box-shadow: var(--af-shadow);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.af-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(51, 72, 90, 0.13);
+}
+.af-card__art {
+  width: 100%;
+  border-radius: 10px;
+  background:
+    radial-gradient(120% 90% at 20% 0%, rgba(85, 195, 255, 0.16), rgba(85, 195, 255, 0) 60%),
+    linear-gradient(135deg, #f2f7fb, #eef7f4);
+  display: flex;
+  justify-content: center;
+  padding: 14px 0 10px;
+}
+.af-card__art svg { width: 72px; height: 62px; }
+.af-pill {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.af-pill--green { background: #e3f6e8; color: #2c7a4b; }
+.af-pill--blue { background: #e3f1fd; color: #1273b8; }
+.af-pill--mint { background: #dff7ef; color: #177a62; }
+.af-pill--violet { background: #ece8fb; color: #5b4bb5; }
+.af-card__title {
+  font-size: 1.08rem;
+  margin: 0;
+  line-height: 1.25;
+}
+.af-card__desc { margin: 0; font-size: 0.88rem; flex-grow: 1; }
+.af-card__link {
+  color: var(--af-blue);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+.af-card:hover .af-card__link { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 1080px) { .af-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .af-grid { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .af-card { transition: none; }
+  .af-card:hover { transform: none; }
+}
+
+/* ── Testimonial card, their Zipcar pattern: gradient bottom edge ── */
+
+.af-quote {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  margin-block-start: 54px;
+  background:
+    linear-gradient(143deg, rgba(255, 255, 255, 0.94), #ffffff),
+    #fff;
+  border: 1px solid var(--af-line);
+  border-radius: var(--af-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--af-shadow);
+  position: relative;
+}
+.af-quote::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: 6px;
+  background: var(--af-grad-90);
+}
+.af-quote__who {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 28px;
+  background: linear-gradient(160deg, #f4fafd, #f2faf7);
+  border-inline-end: 1px solid var(--af-line);
+}
+.af-quote__badge {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--af-grad);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.af-quote__name { margin: 0; color: var(--af-ink); font-weight: 700; }
+.af-quote__role { margin: 0; font-size: 0.86rem; }
+.af-quote__body { padding: 28px 32px; }
+.af-quote__text {
+  margin: 0 0 14px;
+  color: var(--af-ink);
+  font-size: 1.08rem;
+  line-height: 1.55;
+}
+.af-quote__link { color: var(--af-blue); font-weight: 600; }
+.af-quote__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 760px) {
+  .af-quote { grid-template-columns: 1fr; }
+  .af-quote__who { border-inline-end: none; border-block-end: 1px solid var(--af-line); }
+}
+
+/* ── CV columns ── */
+
+.af-cv {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr;
+  gap: 30px;
+  margin-block-start: 54px;
+  background: #fff;
+  border: 1px solid var(--af-line);
+  border-radius: var(--af-radius-lg);
+  box-shadow: var(--af-shadow);
+  padding: 30px 32px;
+}
+.af-cv__h { font-size: 1.02rem; margin: 0 0 12px; }
+.af-cv__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  font-size: 0.92rem;
+}
+.af-cv__note { margin: 0 0 12px; font-size: 0.92rem; }
+.af-cv__col--cta {
+  border-inline-start: 1px solid var(--af-line);
+  padding-inline-start: 30px;
+}
+
+@media (max-width: 860px) {
+  .af-cv { grid-template-columns: 1fr; }
+  .af-cv__col--cta {
+    border-inline-start: none;
+    padding-inline-start: 0;
+    border-block-start: 1px solid var(--af-line);
+    padding-block-start: 20px;
+  }
+}
+
+/* ---------------------------------------------------------------
+   Close — their "Ready to see it in action?" panel
+   --------------------------------------------------------------- */
+
+.af-closewrap { padding: 40px 24px 96px; }
+.af-close {
+  position: relative;
+  max-width: 1180px;
+  margin-inline: auto;
+  border-radius: var(--af-radius-xl);
+  background:
+    radial-gradient(110% 80% at 85% 20%, rgba(85, 195, 255, 0.16), rgba(85, 195, 255, 0) 55%),
+    linear-gradient(160deg, #ffffff, #f2f8fb);
+  border: 1px solid var(--af-line);
+  box-shadow: var(--af-shadow);
+  overflow: hidden;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+}
+.af-close__artsvg {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  width: 58%;
+  height: 100%;
+  pointer-events: none;
+}
+.af-close__text {
+  position: relative;
+  z-index: 1;
+  padding: 56px;
+  max-width: 55%;
+}
+.af-close__sub { margin: 12px 0 26px; }
+.af-close__cta { display: flex; flex-wrap: wrap; gap: 14px; }
+
+@media (max-width: 760px) {
+  .af-close__text { max-width: 100%; padding: 36px 26px; }
+  .af-close__artsvg { opacity: 0.3; }
+}
+
+/* ---------------------------------------------------------------
+   Footer — their 45° sky→mint gradient band
+   --------------------------------------------------------------- */
+
+.af-footer {
+  background: var(--af-grad);
+  color: var(--af-ink);
+}
+.af-footer__inner {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: 56px 24px 30px;
+  display: grid;
+  gap: 18px;
+}
+.af-footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.5rem;
+  margin: 0;
+}
+.af-footer__brand .af-loop { filter: brightness(0.4) saturate(0.6); }
+.af-footer__brand .af-brand__name { font-weight: 700; }
+.af-footer__brand .af-brand__for { color: rgba(35, 55, 65, 0.75); }
+.af-footer__links { display: flex; flex-wrap: wrap; gap: 22px; }
+.af-footer__links a {
+  color: var(--af-ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.af-footer__links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.af-footer__note {
+  margin: 0;
+  max-width: 68ch;
+  font-size: 0.85rem;
+  color: rgba(35, 55, 65, 0.8);
+}
+.af-footer__meta {
+  margin: 8px 0 0;
+  padding-block-start: 16px;
+  border-block-start: 1px solid rgba(35, 55, 65, 0.18);
+  font-size: 0.8rem;
+  color: rgba(35, 55, 65, 0.75);
+}
